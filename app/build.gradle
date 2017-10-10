@@ -1,5 +1,13 @@
 apply plugin: 'com.android.application'
 
+//获取当前的时间戳
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmm')
+    return formattedDate
+}
+
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
@@ -15,6 +23,25 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //渠道Flavors
+    productFlavors {
+        xiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+        }
+        wandoujia {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+        }
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'androiddebugkey'
+            keyPassword ALIAS_PASSWORD
+            storeFile file('abc.jks')
+            storePassword STORE_PASSWORD
         }
     }
 }
